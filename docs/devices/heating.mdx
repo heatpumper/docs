@@ -62,12 +62,25 @@ Im Diagram ist ein Shelly 3EM dargestellt, hier kann aber ein beliebiger [Zähle
 Dieses Code-Beispiel zeigt, wie du eine Wärmepumpe mittels Shelly 1 und Shelly 3EM konfigurieren kannst.
 Dafür kommt der spezielle Typ `sgready` zum Einsatz.
 
+Achtung: Normalerweise bevorzugen Wärmepumpe längere Laufzeiten am Stück, 
+teilweise ist auch die Garantie an eine Durchschnittslaufzeit gekoppelt. 
+Prüft in solchen Fällen den Einsatz der Parameter "disable" und "guardduration".
+
 ```yaml
 loadpoints:
   - title: Meine Wärmepumpe
     charger: heatpump_control
     meter: heatpump_power
     integrateddevice: true # Fahrzeugauswahl deaktivieren
+# Die bekannten Parameter von den Wallboxen können ergänzt werden, beispielsweise
+    priority: 0 #Umso höher umso besser
+    enable:
+      threshold: -1300
+      delay: 5m
+    disable: #
+      threshold: 200
+      delay: 20m
+    guardduration: 30m #Gut für die Lebensdauer der Wärmepumpe
 
 meters:
   - name: heatpump_power
